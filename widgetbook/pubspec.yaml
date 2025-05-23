@@ -5,6 +5,7 @@ environment:
   sdk: ^3.8.0
 
 dependencies:
+  flutter_lints:
   widgetbook_annotation: ^3.5.0
   widgetbook: ^3.14.1
   mulmuger:
