@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mulmuger/app.dart';
+import 'package:mulmuger/presentation/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: App(),
+      debugShowCheckedModeBanner: false,
+      home: HomeScreen(),
     );
   }
 }
