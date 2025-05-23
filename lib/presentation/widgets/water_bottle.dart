@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class WaterBottle extends StatelessWidget {
   static const double limit = 0.78;
   static const int innerHeight = 152;
-  static const String imageUrl = 'assets/images/water_bottle.png';
 
+  final String imageUrl;
   final double percentage;
 
-  const WaterBottle({super.key, required this.percentage});
+  const WaterBottle({
+    super.key,
+    required this.percentage,
+    this.imageUrl = 'assets/images/water_bottle.png',
+  });
 
   bool get _isOverflow => percentage > limit;
 
