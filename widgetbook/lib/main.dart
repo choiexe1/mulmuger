@@ -20,6 +20,16 @@ class WidgetbookApp extends StatelessWidget {
       // The [directories] variable does not exist yet,
       // it will be generated in the next step
       directories: directories,
+      addons: [
+        InspectorAddon(),
+        ViewportAddon([
+          Viewports.none,
+          IosViewports.iPhone13,
+          AndroidViewports.samsungGalaxyNote20,
+          MacosViewports.macbookPro,
+        ]),
+        AlignmentAddon(),
+      ],
     );
   }
 }
