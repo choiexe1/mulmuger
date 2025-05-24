@@ -54,6 +54,7 @@ dev_dependencies:
   freezed: ^3.0.6
   widgetbook_generator: ^3.13.0
   json_serializable: ^6.9.5
+  very_good_analysis: ^7.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
