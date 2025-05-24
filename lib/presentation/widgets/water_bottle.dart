@@ -6,13 +6,11 @@ class WaterBottle extends StatelessWidget {
 
   final String imageUrl;
   final double percentage;
-  final String packageName;
 
   const WaterBottle({
     super.key,
     required this.percentage,
     this.imageUrl = 'assets/images/water_bottle.png',
-    this.packageName = 'mulmuger',
   });
 
   bool get _isOverflow => percentage > limit;
@@ -40,7 +38,7 @@ class WaterBottle extends StatelessWidget {
               ),
             ),
           ),
-          Image.asset(imageUrl, fit: BoxFit.contain, package: packageName),
+          Image.asset(imageUrl, fit: BoxFit.contain),
         ],
       ),
     );
