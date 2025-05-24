@@ -37,6 +37,20 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            resValue("string", "app_name", "물먹어 - dev")
+        }
+        create("production") {
+            dimension = "environment"
+            applicationIdSuffix = ".production"
+        }
+    }
 }
 
 flutter {

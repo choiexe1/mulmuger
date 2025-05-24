@@ -5,7 +5,7 @@ import 'package:mulmuger/config/app_config.dart';
 void main() {
   final AppConfig appConfig = AppConfig.initialize(
     appName: '물머거',
-    flavor: Flavor.prod,
+    flavor: Flavor.dev,
   );
 
   runApp(App(appConfig: appConfig));
