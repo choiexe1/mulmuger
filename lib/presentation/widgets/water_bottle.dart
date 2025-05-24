@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class WaterBottle extends StatelessWidget {
-  static const double limit = 0.78;
+  const WaterBottle({
+    required this.percentage,
+    super.key,
+    this.imageUrl = 'assets/images/water_bottle.png',
+  });
+
+  static const double limit = 0.77;
   static const int innerHeight = 152;
 
   final String imageUrl;
   final double percentage;
-
-  const WaterBottle({
-    super.key,
-    required this.percentage,
-    this.imageUrl = 'assets/images/water_bottle.png',
-  });
 
   bool get _isOverflow => percentage > limit;
 
@@ -27,8 +27,8 @@ class WaterBottle extends StatelessWidget {
             bottom: 30,
             child: ClipRRect(
               borderRadius: _isOverflow
-                  ? BorderRadius.vertical(top: Radius.circular(24))
-                  : BorderRadius.vertical(top: Radius.circular(2)),
+                  ? const BorderRadius.vertical(top: Radius.circular(24))
+                  : const BorderRadius.vertical(top: Radius.circular(2)),
               child: Container(
                 width: 56,
                 height: _isOverflow
