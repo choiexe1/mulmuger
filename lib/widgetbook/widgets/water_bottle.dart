@@ -13,6 +13,5 @@ Widget build(BuildContext context) {
           '물병에 채울 물의 양을 0 ~ 1.0로 조절 합니다. percentage는 위젯 내부 변수 limit을 넘지 못합니다.',
       initialValue: 0,
     ),
-    packageName: 'mulmuger',
   );
 }
