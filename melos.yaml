@@ -1,0 +1,9 @@
+name: mulmuger
+packages:
+  - .
+  - ./widgetbook
+
+scripts:
+  run:dev: flutter run
+  watch:
+    run: melos exec -- flutter pub run build_runner watch -d
