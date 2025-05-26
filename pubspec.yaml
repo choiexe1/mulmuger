@@ -39,6 +39,8 @@ dependencies:
   widgetbook_annotation: ^3.5.0
   widgetbook: ^3.14.1
   melos: ^6.3.2
+  flutter_local_notifications: ^19.2.1
+  timezone: ^0.10.1
 
 dev_dependencies:
   flutter_test:
