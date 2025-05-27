@@ -1,6 +1,15 @@
 enum Flavor { dev, prod }
 
 class AppConfig {
+  factory AppConfig({required Flavor flavor, required String appName}) {
+    if (_instance != null) {
+      throw Exception('AppConfig이 이미 초기화 되어있습니다.');
+    } else {
+      _instance = AppConfig._(flavor: flavor, appName: appName);
+      return _instance!;
+    }
+  }
+
   const AppConfig._({required this.flavor, required this.appName});
 
   final Flavor flavor;
@@ -16,18 +25,6 @@ class AppConfig {
     }
 
     return _instance!;
-  }
-
-  static AppConfig initialize({
-    required Flavor flavor,
-    required String appName,
-  }) {
-    if (_instance != null) {
-      throw Exception('AppConfig이 이미 초기화 되어있습니다.');
-    } else {
-      _instance = AppConfig._(flavor: flavor, appName: appName);
-      return instance;
-    }
   }
 
   bool get isProduction => flavor == Flavor.prod;
