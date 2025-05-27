@@ -46,3 +46,5 @@ app.*.map.json
 
 # generated source
 *.g.dart
+*.freezed.dart
+*.gr.dart
