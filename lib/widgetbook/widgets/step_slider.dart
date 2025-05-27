@@ -18,7 +18,7 @@ Widget build(BuildContext context) {
         min: context.knobs.double.input(label: '최소 값', initialValue: 5),
         interval: context.knobs.double.input(label: '인터벌', initialValue: 5),
         padding: context.knobs.double.input(label: '패딩', description: '기본 값 0'),
-        onChanged: (double value) {},
+        onChangedEnd: (double value) {},
       ),
     ],
   );

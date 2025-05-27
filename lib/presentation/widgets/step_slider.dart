@@ -5,7 +5,7 @@ class StepSlider extends StatefulWidget {
     required this.labelSuffix,
     required this.max,
     required this.interval,
-    required this.onChanged,
+    required this.onChangedEnd,
     super.key,
     this.min = 0,
     this.value = 0,
@@ -18,7 +18,7 @@ class StepSlider extends StatefulWidget {
   final double min;
   final double interval;
   final double padding;
-  final ValueChanged<double> onChanged;
+  final ValueChanged<double> onChangedEnd;
 
   @override
   State<StatefulWidget> createState() => _StepSliderState();
@@ -66,7 +66,7 @@ class _StepSliderState extends State<StepSlider> {
       divisions: divisions,
       label: '${_value.round()}${widget.labelSuffix}',
       onChanged: _setValue,
-      onChangeEnd: widget.onChanged,
+      onChangeEnd: widget.onChangedEnd,
     );
   }
 }
