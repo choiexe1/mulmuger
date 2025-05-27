@@ -47,9 +47,9 @@ class LocalNotifier {
   }
 
   Future<void> immediateNotification({
-    NotificationLevel level = NotificationLevel.immediate,
     String? title,
     String? body,
+    NotificationLevel level = NotificationLevel.immediate,
   }) async {
     return _notificationPlugin.show(
       level.id,
@@ -93,8 +93,6 @@ class LocalNotifier {
     NotificationLevel level = NotificationLevel.periodic,
     String? title,
   }) async {
-    await cancelNotification(level);
-
     return _notificationPlugin.periodicallyShowWithDuration(
       level.id,
       '물먹어',
