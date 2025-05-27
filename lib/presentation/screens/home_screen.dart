@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mulmuger/config/app_config.dart';
+import 'package:mulmuger/presentation/screens/home_action.dart';
 import 'package:mulmuger/presentation/widgets/step_slider.dart';
 import 'package:mulmuger/presentation/widgets/water_bottle.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({required this.onAction, super.key});
+
+  final ValueChanged<HomeAction> onAction;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,13 @@ class HomeScreen extends StatelessWidget {
                 min: 5,
                 labelSuffix: '분',
                 padding: 8,
-                onChanged: (double value) {
-                  debugPrint('$value');
+                value: 5,
+                onChangedEnd: (double value) {
+                  onAction(
+                    HomeAction.onChangedDuration(
+                      Duration(minutes: value.toInt()),
+                    ),
+                  );
                 },
               ),
             ],
