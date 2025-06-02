@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mulmuger/app.dart';
-import 'package:mulmuger/config/app_config.dart';
+import 'package:mulmuger/core/app_router.dart';
 import 'package:mulmuger/core/injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  dependencyInjection();
+  await injection();
 
-  final appConfig = AppConfig.initialize(appName: '물머거', flavor: Flavor.dev);
-  runApp(App(appConfig: appConfig));
+  runApp(ProviderScope(child: App(router: locator<AppRouter>())));
 }
