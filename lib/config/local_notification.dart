@@ -12,7 +12,7 @@ enum NotificationLevel {
   final int id;
 }
 
-class LocalNotifier {
+class LocalNotification {
   static const String notificationIcon = '@mipmap/ic_launcher';
   static const String location = 'Asia/Seoul';
   final _notificationPlugin = FlutterLocalNotificationsPlugin();
@@ -98,6 +98,7 @@ class LocalNotifier {
       '물먹어',
       body,
       duration,
+      payload: '$duration 마다 알림',
       _notificationDetails(),
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
@@ -109,5 +110,9 @@ class LocalNotifier {
 
   Future<void> cancelAllNotifications() async {
     await _notificationPlugin.cancelAll();
+  }
+
+  Future<List<PendingNotificationRequest>> pendingNotifications() async {
+    return _notificationPlugin.pendingNotificationRequests();
   }
 }
