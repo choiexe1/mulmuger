@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:mulmuger/config/app_config.dart';
-import 'package:mulmuger/presentation/screens/home_screen.dart';
+import 'package:mulmuger/core/app_router.dart';
 
 class App extends StatelessWidget {
-  const App({required this.appConfig, super.key});
+  const App({required AppRouter router, super.key}) : _router = router;
 
-  final AppConfig appConfig;
+  final AppRouter _router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appConfig.appName,
+    return MaterialApp.router(
+      title: '물머거',
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+      routerConfig: _router.config(),
     );
   }
 }
