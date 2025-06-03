@@ -7,5 +7,5 @@ sealed class HomeAction with _$HomeAction {
   const factory HomeAction.onChangedDuration(Duration duration) =
       OnChangedDuration;
   const factory HomeAction.checkNotifications() = CheckNotifications;
-  const factory HomeAction.deleteNotifications() = DeleteNotifications;
+  const factory HomeAction.deleteNotifications() = CancelNotifications;
 }
