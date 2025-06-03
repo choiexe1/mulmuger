@@ -12,4 +12,12 @@ class NotificationEntity {
   final String body;
   final DateTime createdAt;
   final Duration duration;
+
+  @override
+  String toString() {
+    return '''
+    NotificationEntity(id: $id, title: $title, body: $body,
+    createdAt: $createdAt, duration: $duration)
+    ''';
+  }
 }
