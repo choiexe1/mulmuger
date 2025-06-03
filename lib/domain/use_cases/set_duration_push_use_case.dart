@@ -7,8 +7,13 @@ class SetDurationPushUseCase {
 
   Future<void> execute({
     required Duration duration,
+    required String title,
     required String body,
   }) async {
-    await _notificationService.durationPush(body: body, duration: duration);
+    await _notificationService.durationPush(
+      title: title,
+      body: body,
+      duration: duration,
+    );
   }
 }
