@@ -1,7 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:mulmuger/config/local_notification.dart';
 import 'package:mulmuger/core/logger.dart';
 import 'package:mulmuger/core/router/app_router.dart';
 import 'package:mulmuger/data/services/flutter_local_notification_push_service.dart';
@@ -20,7 +19,6 @@ Future<void> injection() async {
   sl
     ..registerSingleton<AppRouter>(AppRouter())
     ..registerSingleton<Logger>(logger)
-    ..registerSingleton<LocalNotification>(LocalNotification())
     // ========
     // SERVICES
     // ========
