@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mulmuger/core/app_router.dart';
+import 'package:mulmuger/config/app_config.dart';
+import 'package:mulmuger/core/router/app_router.dart';
 
 class App extends StatelessWidget {
   const App({required AppRouter router, super.key}) : _router = router;
@@ -9,9 +10,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: '물머거',
+      title: AppConfig.appName,
       debugShowCheckedModeBanner: false,
-      routerConfig: _router.config(),
+      routerConfig: _router.config(deepLinkBuilder: _router.deepLinkHandler),
     );
   }
 }
