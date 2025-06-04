@@ -62,7 +62,7 @@ class FlutterLocalNotificationPushService implements LocalPushService {
     required String title,
     required String body,
     required Duration duration,
-    int id = NotificationConfig.durationNotificationId,
+    required int id,
   }) async {
     _initializeChecker();
 
@@ -88,7 +88,7 @@ class FlutterLocalNotificationPushService implements LocalPushService {
   Future<void> immediatePush({
     required String title,
     required String body,
-    int id = NotificationConfig.immediateNotificationId,
+    required int id,
   }) async {
     _initializeChecker();
     await _plugin.show(id, title, body, _notificationDetails());
@@ -110,7 +110,7 @@ class FlutterLocalNotificationPushService implements LocalPushService {
   Future<void> scheduledPush({
     required String title,
     required String body,
-    int id = NotificationConfig.scheduledNotificationId,
+    required int id,
   }) async {
     throw UnimplementedError();
     // final now = tz.TZDateTime.now(tz.local);
