@@ -36,7 +36,13 @@ jobs:
           BUILD_OUTPUT=$(widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }})
           echo "$BUILD_OUTPUT"
           BUILD_URL=$(echo "$BUILD_OUTPUT" | grep -oE 'https://app.widgetbook.io/[0-9a-fA-F\-]+/[0-9a-fA-F\-]+/builds/[0-9a-fA-F\-]+')
-          echo "build_url=$BUILD_URL" >> "$GITHUB_OUTPUT"
+          CDN_URL="${APP_URL/https:\/\/app.widgetbook.io/https:\/\/cdn.widgetbook.io}"
+          WIDGETBOOK_URL="${CDN_URL}/index.html"
+
+          echo "url=$WIDGETBOOK_URL" >> "$GITHUB_OUTPUT"
+          echo "Debug: Original APP_URL: $APP_URL"
+          echo "Debug: Converted CDN_URL: $CDN_URL"
+          echo "Debug: Widgetbook URL: $WIDGETBOOK_URL"
 
       - name: Add Widgetbook URL to Pull Request Comment
         if: success() && github.event_name == 'pull_request' && steps.push_widgetbook.outputs.build_url != ''
@@ -44,9 +50,11 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
+            #
             ✨ **Widgetbook Cloud Preview Available!** ✨
 
-            최신 빌드는 다음 링크에서 확인할 수 있습니다: ${{ steps.push_widgetbook.outputs.build_url }}
+            최신 위젯북은 다음 링크에서 확인할 수 있습니다: ${{ steps.push_widgetbook.outputs.url }}
 
             _이 댓글은 푸시할 때마다 최신 빌드 링크로 자동 업데이트됩니다._
-            edit-mode: replace
+            #
+          edit-mode: replace
