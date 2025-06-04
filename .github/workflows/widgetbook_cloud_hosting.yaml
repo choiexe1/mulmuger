@@ -35,7 +35,7 @@ jobs:
         run: |
           BUILD_OUTPUT=$(widgetbook cloud build push --api-key ${{ secrets.WIDGETBOOK_API_KEY }})
           echo "$BUILD_OUTPUT"
-          BUILD_URL=$(echo "$BUILD_OUTPUT" | grep -oE 'https://app.widgetbook.io/[0-9a-fA-F\-]+/[0-9a-fA-F\-]+/builds/[0-9a-fA-F\-]+')
+          APP_URL=$(echo "$BUILD_OUTPUT" | grep -oE 'https://app.widgetbook.io/[0-9a-fA-F\-]+/[0-9a-fA-F\-]+/builds/[0-9a-fA-F\-]+')
           CDN_URL="${APP_URL/https:\/\/app.widgetbook.io/https:\/\/cdn.widgetbook.io}"
           WIDGETBOOK_URL="${CDN_URL}/index.html"
 
