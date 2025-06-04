@@ -6,7 +6,6 @@ import 'package:mulmuger/domain/enums/notification_type.dart';
 import 'package:mulmuger/domain/enums/permission_type.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
-import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/remove_duration_notification_in_shared_prefs_use_case.dart';
 import 'package:mulmuger/domain/use_cases/save_duration_notification_use_case.dart';
