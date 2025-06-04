@@ -2,6 +2,8 @@ name: Widgetbook Cloud Hosting
 on:
   pull_request:
     branches: ["main"]
+    paths:
+      - "lib/widgetbook/**"
 
 jobs:
   widgetbook-cloud-hosting:
