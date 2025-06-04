@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mulmuger/config/notification_config.dart';
+import 'package:mulmuger/domain/entities/notification_entity.dart';
+import 'package:mulmuger/domain/enums/notification_type.dart';
 import 'package:mulmuger/domain/enums/permission_type.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
-import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
+import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
+import 'package:mulmuger/domain/use_cases/remove_duration_notification_in_shared_prefs_use_case.dart';
+import 'package:mulmuger/domain/use_cases/save_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/set_duration_push_use_case.dart';
 import 'package:mulmuger/presentation/screens/home/home_action.dart';
 import 'package:mulmuger/presentation/screens/home/home_state.dart';
@@ -14,17 +18,23 @@ class HomeViewModel with ChangeNotifier {
     this._logger,
     this._setDurationPushUseCase,
     this._cancelNotificationsUseCase,
-    this._findPendingNotificationsUseCase,
     this._checkPermissionUseCase,
+    this._saveDurationNotificationUseCase,
+    this._getDurationNotificationUseCase,
+    this._removeDurationNotificationInSharedPrefsUseCase,
   );
 
   HomeState _state = const HomeState();
 
   final Logger _logger;
+
   final SetDurationPushUseCase _setDurationPushUseCase;
   final CancelNotificationsUseCase _cancelNotificationsUseCase;
-  final FindPendingNotificationsUseCase _findPendingNotificationsUseCase;
   final CheckPermissionUseCase _checkPermissionUseCase;
+  final SaveDurationNotificationUseCase _saveDurationNotificationUseCase;
+  final GetDurationNotificationUseCase _getDurationNotificationUseCase;
+  final RemoveDurationNotificationInSharedPrefsUseCase
+  _removeDurationNotificationInSharedPrefsUseCase;
 
   HomeState get state => _state;
 
@@ -45,25 +55,33 @@ class HomeViewModel with ChangeNotifier {
     _state = state.copyWith(duration: duration);
 
     await _setDurationPushUseCase.execute(
+      id: NotificationType.duration.id,
       title: NotificationConfig.title,
       body: NotificationConfig.defaultMessage,
       duration: duration,
     );
 
+    final entity = NotificationEntity.fromNow(
+      id: NotificationType.duration.id,
+      title: NotificationConfig.title,
+      body: NotificationConfig.defaultMessage,
+      duration: duration,
+    );
+
+    await _saveDurationNotificationUseCase.execute(entity);
+
     notifyListeners();
   }
 
   Future<void> _findPendingNotifications() async {
-    final notifications = await _findPendingNotificationsUseCase.execute();
-    notifications.forEach(_logger.d);
+    final notification = await _getDurationNotificationUseCase.execute();
+    _logger.d(notification);
   }
 
   Future<void> _cancelNotifications() async {
     await _cancelNotificationsUseCase.execute();
-
+    await _removeDurationNotificationInSharedPrefsUseCase.execute();
     _state = _state.copyWith(duration: Duration.zero);
-
-    _logger.d('모든 알람 제거');
     notifyListeners();
   }
 }

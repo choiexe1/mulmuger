@@ -6,6 +6,7 @@ import 'package:mulmuger/core/service_locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await injection();
+  await sl.allReady();
 
   runApp(App(router: sl<AppRouter>()));
 }
