@@ -20,11 +20,11 @@ jobs:
           flutter pub get
 
       - name: Build Widgetbook
-        working-directory: widgetbook
+        working-directory: lib/widgetbook
         run: |
           flutter pub get
           dart run build_runner build -d
-          flutter build web -t lib/widgetbook/widgetbook.dart
+          flutter build web -t widgetbook.dart
 
       - name: Install Widgetbook CLI
         run: dart pub global activate widgetbook_cli
