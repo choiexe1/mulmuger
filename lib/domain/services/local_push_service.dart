@@ -5,18 +5,18 @@ abstract interface class LocalPushService {
   Future<void> immediatePush({
     required String title,
     required String body,
-    int id,
+    required int id,
   });
   Future<void> scheduledPush({
     required String title,
     required String body,
-    int id,
+    required int id,
   });
   Future<void> durationPush({
     required Duration duration,
     required String title,
     required String body,
-    int id,
+    required int id,
   });
   Future<void> cancelNotificationById(int id);
   Future<void> cancelNotifications();
