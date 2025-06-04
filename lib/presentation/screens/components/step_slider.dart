@@ -30,24 +30,27 @@ class _StepSliderState extends State<StepSlider> {
   @override
   void initState() {
     super.initState();
+    _value = _roundToInterval(widget.value);
+  }
 
-    _value = (widget.value / widget.interval).round() * widget.interval;
-
-    if (_value < widget.min) {
-      _value = widget.min;
+  @override
+  void didUpdateWidget(covariant StepSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      _value = _roundToInterval(widget.value);
     }
+  }
 
-    if (_value > widget.max) {
-      _value = widget.max;
-    }
+  double _roundToInterval(double val) {
+    final roundedValue = (val / widget.interval).round() * widget.interval;
+    if (roundedValue < widget.min) return widget.min;
+    if (roundedValue > widget.max) return widget.max;
+    return roundedValue;
   }
 
   void _setValue(double newValue) {
     setState(() {
-      _value = (newValue / widget.interval).round() * widget.interval;
-
-      if (_value < widget.min) _value = widget.min;
-      if (_value > widget.max) _value = widget.max;
+      _value = _roundToInterval(newValue);
     });
   }
 
@@ -66,7 +69,9 @@ class _StepSliderState extends State<StepSlider> {
       divisions: divisions,
       label: '${_value.round()}${widget.labelSuffix}',
       onChanged: _setValue,
-      onChangeEnd: widget.onChangedEnd,
+      onChangeEnd: (value) {
+        widget.onChangedEnd(value);
+      },
     );
   }
 }

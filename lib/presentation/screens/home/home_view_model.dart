@@ -43,6 +43,7 @@ class HomeViewModel with ChangeNotifier {
     await _checkPermissionUseCase.execute(PermissionType.notification);
 
     _state = state.copyWith(duration: duration);
+
     await _setDurationPushUseCase.execute(
       title: NotificationConfig.title,
       body: NotificationConfig.defaultMessage,
@@ -59,6 +60,10 @@ class HomeViewModel with ChangeNotifier {
 
   Future<void> _cancelNotifications() async {
     await _cancelNotificationsUseCase.execute();
+
+    _state = _state.copyWith(duration: Duration.zero);
+
     _logger.d('모든 알람 제거');
+    notifyListeners();
   }
 }
