@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:mulmuger/config/notification_config.dart';
+import 'package:mulmuger/domain/enums/permission_type.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
+import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
 import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/set_duration_push_use_case.dart';
 import 'package:mulmuger/presentation/screens/home/home_action.dart';
@@ -13,6 +15,7 @@ class HomeViewModel with ChangeNotifier {
     this._setDurationPushUseCase,
     this._cancelNotificationsUseCase,
     this._findPendingNotificationsUseCase,
+    this._checkPermissionUseCase,
   );
 
   HomeState _state = const HomeState();
@@ -21,6 +24,7 @@ class HomeViewModel with ChangeNotifier {
   final SetDurationPushUseCase _setDurationPushUseCase;
   final CancelNotificationsUseCase _cancelNotificationsUseCase;
   final FindPendingNotificationsUseCase _findPendingNotificationsUseCase;
+  final CheckPermissionUseCase _checkPermissionUseCase;
 
   HomeState get state => _state;
 
@@ -36,6 +40,8 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> _setDurationPush(Duration duration) async {
+    await _checkPermissionUseCase.execute(PermissionType.notification);
+
     _state = state.copyWith(duration: duration);
     await _setDurationPushUseCase.execute(
       title: NotificationConfig.title,
