@@ -45,7 +45,7 @@ jobs:
           echo "Debug: Widgetbook URL: $WIDGETBOOK_URL"
 
       - name: Add Widgetbook URL to Pull Request Comment
-        if: success() && github.event_name == 'pull_request' && steps.push_widgetbook.outputs.build_url != ''
+        if: success() && github.event_name == 'pull_request' && steps.push_widgetbook.outputs.url != ''
         uses: peter-evans/create-or-update-comment@v4
         with:
           issue-number: ${{ github.event.pull_request.number }}
