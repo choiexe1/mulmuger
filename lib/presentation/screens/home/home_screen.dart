@@ -12,10 +12,10 @@ class HomeScreen extends StatelessWidget {
   final ValueChanged<HomeAction> onAction;
 
   void _onChangeDuration(double value) {
-    if (value > 0) {
-      onAction(HomeAction.onChangedDuration(Duration(minutes: 1)));
-    } else {
+    if (value <= 0) {
       onAction(const HomeAction.deleteNotifications());
+    } else {
+      onAction(HomeAction.onChangedDuration(Duration(minutes: value.toInt())));
     }
   }
 
