@@ -6,11 +6,13 @@ class SetDurationPushUseCase {
   final LocalPushService _notificationService;
 
   Future<void> execute({
+    required int id,
     required Duration duration,
     required String title,
     required String body,
   }) async {
     await _notificationService.durationPush(
+      id: id,
       title: title,
       body: body,
       duration: duration,
