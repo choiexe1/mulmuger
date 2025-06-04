@@ -39,4 +39,9 @@ class SharedPrefsLocalRepositoryImpl implements SharedPrefsLocalRepository {
       return null;
     }
   }
+
+  @override
+  Future<void> remove(String key) async {
+    await _prefs.remove(key);
+  }
 }
