@@ -13,6 +13,7 @@ import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
 import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
+import 'package:mulmuger/domain/use_cases/remove_duration_notification_in_shared_prefs_use_case.dart';
 import 'package:mulmuger/domain/use_cases/save_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/set_duration_push_use_case.dart';
 import 'package:mulmuger/presentation/screens/home/home_view_model.dart';
@@ -66,10 +67,13 @@ Future<void> injection() async {
     ..registerLazySingleton<GetDurationNotificationUseCase>(
       () => GetDurationNotificationUseCase(sl()),
     )
+    ..registerLazySingleton<RemoveDurationNotificationInSharedPrefsUseCase>(
+      () => RemoveDurationNotificationInSharedPrefsUseCase(sl()),
+    )
     // ===========
     // VIEW MODELS
     // ===========
     ..registerFactory<HomeViewModel>(
-      () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl()),
+      () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl()),
     );
 }
