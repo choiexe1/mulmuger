@@ -1,10 +1,5 @@
 # 물머거
 
-[Widgetbook](https://cdn.widgetbook.io/5e70b33d-6f01-4352-bc75-2a3729e6f78f/c9a427fd-7294-451d-a925-5bac1fd7d68b/builds/dce694f8-14aa-4b74-9127-a1c9fcdd2f8a/index.html)
+## Issue log
 
-## Development log
-
-## 06.04
-
-- 몇일 간 리버팟 가지고 이것저것 시도해봤는데, DI 자체는 굉장히 쉬워졌다. 근데 이게 과연 클린 아키텍쳐라고 할 수 있을까 싶어 제거하기로 결정
-- Github Actions로 Widgetbook Cloud 자동 배포 기능을 추가했다. 정상적으로 해당 액션이 통과하면 풀 리퀘스트 댓글로 최신 위젯북 빌드 링크가 달린다.
+- 개발하며 이것 저것 이슈도 기록하고, 기록도 [여기](https://github.com/choiexe1/mulmuger/issues/1)에 남기고 있습니다.
