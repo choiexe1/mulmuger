@@ -26,15 +26,15 @@ class SharedPrefsLocalRepositoryImpl implements SharedPrefsLocalRepository {
   @override
   T? get<T>(String key) {
     if (T == String) {
-      return _prefs.getString(key) as T;
+      return _prefs.getString(key) as T?;
     } else if (T == int) {
-      return _prefs.getInt(key) as T;
+      return _prefs.getInt(key) as T?;
     } else if (T == bool) {
-      return _prefs.getBool(key) as T;
+      return _prefs.getBool(key) as T?;
     } else if (T == double) {
-      return _prefs.getDouble(key) as T;
+      return _prefs.getDouble(key) as T?;
     } else if (T == List<String>) {
-      return _prefs.getStringList(key) as T;
+      return _prefs.getStringList(key) as T?;
     } else {
       return null;
     }
