@@ -16,6 +16,12 @@ class HomeScreenRoot extends StatefulWidget {
 
 class _HomeScreenRootState extends State<HomeScreenRoot> {
   @override
+  void initState() {
+    super.initState();
+    widget.viewModel.init();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: widget.viewModel,
