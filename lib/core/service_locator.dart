@@ -1,18 +1,21 @@
+import 'dart:async';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:mulmuger/core/logger.dart';
 import 'package:mulmuger/core/router/app_router.dart';
+import 'package:mulmuger/data/repositories/flutter_local_push_notification_repository.dart';
 import 'package:mulmuger/data/repositories/shared_prefs_local_repository_impl.dart';
-import 'package:mulmuger/data/services/flutter_local_notification_push_service.dart';
 import 'package:mulmuger/data/services/permission_handler_service.dart';
+import 'package:mulmuger/domain/repositories/local_push_repository.dart';
 import 'package:mulmuger/domain/repositories/shared_prefs_local_repository.dart';
-import 'package:mulmuger/domain/services/local_push_service.dart';
 import 'package:mulmuger/domain/services/permission_service.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
 import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
+import 'package:mulmuger/domain/use_cases/listen_notification_action_stream_use_case.dart.dart';
 import 'package:mulmuger/domain/use_cases/remove_duration_notification_in_shared_prefs_use_case.dart';
 import 'package:mulmuger/domain/use_cases/save_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/set_duration_push_use_case.dart';
@@ -31,20 +34,21 @@ Future<void> injection() async {
     ..registerSingletonAsync<SharedPreferences>(
       () async => SharedPreferences.getInstance(),
     )
+    ..registerLazySingleton<FlutterLocalNotificationsPlugin>(
+      FlutterLocalNotificationsPlugin.new,
+    )
     // ============
     // REPOSIRORIES
     // ============
     ..registerLazySingleton<SharedPrefsLocalRepository>(
       () => SharedPrefsLocalRepositoryImpl(sl()),
     )
+    ..registerLazySingleton<LocalPushRepository>(
+      () => FlutterLocalPushNotificationRepository(sl()),
+    )
     // ========
     // SERVICES
     // ========
-    ..registerLazySingleton<LocalPushService>(
-      () => FlutterLocalNotificationPushService(
-        plugin: FlutterLocalNotificationsPlugin(),
-      )..initialize(),
-    )
     ..registerLazySingleton<PermissionService>(PermissionHandlerService.new)
     // =========
     // USE CASES
@@ -70,10 +74,13 @@ Future<void> injection() async {
     ..registerLazySingleton<RemoveDurationNotificationInSharedPrefsUseCase>(
       () => RemoveDurationNotificationInSharedPrefsUseCase(sl()),
     )
+    ..registerLazySingleton<ListenNotificationActionStreamUseCase>(
+      () => ListenNotificationActionStreamUseCase(sl()),
+    )
     // ===========
     // VIEW MODELS
     // ===========
     ..registerFactory<HomeViewModel>(
-      () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl()),
+      () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
     );
 }

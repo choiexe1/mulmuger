@@ -1,9 +1,9 @@
-import 'package:mulmuger/domain/services/local_push_service.dart';
+import 'package:mulmuger/domain/repositories/local_push_repository.dart';
 
 class SetDurationPushUseCase {
-  const SetDurationPushUseCase(this._notificationService);
+  const SetDurationPushUseCase(this._localPushRepository);
 
-  final LocalPushService _notificationService;
+  final LocalPushRepository _localPushRepository;
 
   Future<void> execute({
     required int id,
@@ -11,7 +11,7 @@ class SetDurationPushUseCase {
     required String title,
     required String body,
   }) async {
-    await _notificationService.durationPush(
+    await _localPushRepository.durationPush(
       id: id,
       title: title,
       body: body,

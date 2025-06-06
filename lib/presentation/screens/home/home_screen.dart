@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     if (value <= 0) {
       onAction(const HomeAction.deleteNotifications());
     } else {
-      onAction(HomeAction.onChangedDuration(Duration(minutes: value.toInt())));
+      onAction(HomeAction.onChangedDuration(Duration(minutes: 1)));
     }
   }
 
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 12,
             children: [
-              const Center(child: WaterBottle(percentage: 0)),
+              Center(child: WaterBottle(percentage: state.water)),
               const Row(
                 spacing: 8,
                 children: [Icon(Icons.timer_outlined), Text('알림 설정')],

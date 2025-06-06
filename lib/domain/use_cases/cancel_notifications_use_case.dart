@@ -1,11 +1,11 @@
-import 'package:mulmuger/domain/services/local_push_service.dart';
+import 'package:mulmuger/domain/repositories/local_push_repository.dart';
 
 class CancelNotificationsUseCase {
-  const CancelNotificationsUseCase(this._notificationService);
+  const CancelNotificationsUseCase(this._localPushRepository);
 
-  final LocalPushService _notificationService;
+  final LocalPushRepository _localPushRepository;
 
   Future<void> execute() async {
-    await _notificationService.cancelNotifications();
+    await _localPushRepository.cancelNotifications();
   }
 }
