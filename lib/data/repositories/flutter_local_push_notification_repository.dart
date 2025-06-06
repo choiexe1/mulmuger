@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
@@ -18,31 +16,25 @@ const String _mainIsolatePortName = 'main_isolate_port';
 
 @pragma('vm:entry-point')
 void backgroundNotificationHandler(NotificationResponse res) {
-  print('========= background isolate start =======');
-  print('백그라운드 알림 응답 ID: ${res.id}');
-  print('백그라운드 알림 액션 ID: ${res.actionId}');
-
   final mainSendPort = IsolateNameServer.lookupPortByName(_mainIsolatePortName);
 
   if (mainSendPort == null) {
-    print('백그라운드: 메인 Isolate의 SendPort를 찾을 수 없습니다.');
-    return;
+    throw Exception('백그라운드: 메인 Isolate의 SendPort를 찾을 수 없습니다.');
   }
 
   if (res.actionId == _notificationCancel) {
-    print('백그라운드: "알람 끄기" 액션 메시지 전송');
-    mainSendPort.send('cancel');
+    mainSendPort.send(_notificationCancel);
   }
 }
 
 class FlutterLocalPushNotificationRepository implements LocalPushRepository {
-  FlutterLocalPushNotificationRepository(this._plugin);
+  FlutterLocalPushNotificationRepository(this._plugin) {
+    initialize();
+  }
 
   final FlutterLocalNotificationsPlugin _plugin;
-
   final _actionStreamController =
       StreamController<NotificationAction>.broadcast();
-
   final ReceivePort _receivePort = ReceivePort();
 
   @override
@@ -58,18 +50,6 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
       _receivePort.sendPort,
       _mainIsolatePortName,
     );
-
-    _receivePort.listen((message) {
-      print('수신 : $message');
-      // if (message == 'cancel') {
-      //   _actionStreamController.add(NotificationAction.cancel());
-      // } else if (message == 'add_water') {
-      //   _actionStreamController.add(
-      //     NotificationAction.addWater(NotificationConfig.defaultAddWater),
-      //   );
-      // }
-    });
-
     const androidSettings = AndroidInitializationSettings(
       '@mipmap/ic_launcher',
     );
@@ -78,8 +58,6 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
     await _plugin.initialize(
       initializeSetting,
       onDidReceiveNotificationResponse: (NotificationResponse res) {
-        print(res);
-
         switch (res.actionId) {
           case _notificationCancel:
             _actionStreamController.add(NotificationAction.cancel());
@@ -91,6 +69,12 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
       },
       onDidReceiveBackgroundNotificationResponse: backgroundNotificationHandler,
     );
+
+    _receivePort.listen((message) {
+      if (message == _notificationCancel) {
+        _actionStreamController.add(NotificationAction.cancel());
+      }
+    });
   }
 
   NotificationDetails _notificationDetails() {
@@ -101,7 +85,6 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
         importance: Importance.max,
         priority: Priority.high,
         actions: [AndroidNotificationAction(_notificationCancel, '알람 끄기')],
-        icon: '@mipmap/ic_launcher',
       ),
     );
   }
