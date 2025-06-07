@@ -1,4 +1,4 @@
-package com.example.mulmuger
+package com.mulmuger
 
 import io.flutter.embedding.android.FlutterActivity
 
