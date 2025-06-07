@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:mulmuger/config/app_config.dart';
+import 'package:mulmuger/config/flavor.dart';
 import 'package:mulmuger/core/logger.dart';
 import 'package:mulmuger/core/router/app_router.dart';
 import 'package:mulmuger/data/repositories/flutter_local_push_notification_repository.dart';
@@ -24,63 +26,128 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt sl = GetIt.instance;
 
-Future<void> injection() async {
-  // ==========
-  // APP CONFIG
-  // ==========
-  sl
-    ..registerSingleton<AppRouter>(AppRouter())
-    ..registerSingleton<Logger>(logger)
-    ..registerSingletonAsync<SharedPreferences>(
-      () async => SharedPreferences.getInstance(),
-    )
-    ..registerLazySingleton<FlutterLocalNotificationsPlugin>(
-      FlutterLocalNotificationsPlugin.new,
-    )
-    // ============
-    // REPOSIRORIES
-    // ============
-    ..registerLazySingleton<SharedPrefsLocalRepository>(
-      () => SharedPrefsLocalRepositoryImpl(sl()),
-    )
-    ..registerLazySingleton<LocalPushRepository>(
-      () => FlutterLocalPushNotificationRepository(sl()),
-    )
-    // ========
-    // SERVICES
-    // ========
-    ..registerLazySingleton<PermissionService>(PermissionHandlerService.new)
-    // =========
-    // USE CASES
-    // =========
-    ..registerLazySingleton<SetDurationPushUseCase>(
-      () => SetDurationPushUseCase(sl()),
-    )
-    ..registerLazySingleton<CancelNotificationsUseCase>(
-      () => CancelNotificationsUseCase(sl()),
-    )
-    ..registerLazySingleton<FindPendingNotificationsUseCase>(
-      () => FindPendingNotificationsUseCase(sl()),
-    )
-    ..registerLazySingleton<CheckPermissionUseCase>(
-      () => CheckPermissionUseCase(sl()),
-    )
-    ..registerLazySingleton<SaveDurationNotificationUseCase>(
-      () => SaveDurationNotificationUseCase(sl()),
-    )
-    ..registerLazySingleton<GetDurationNotificationUseCase>(
-      () => GetDurationNotificationUseCase(sl()),
-    )
-    ..registerLazySingleton<RemoveDurationNotificationInSharedPrefsUseCase>(
-      () => RemoveDurationNotificationInSharedPrefsUseCase(sl()),
-    )
-    ..registerLazySingleton<ListenNotificationActionStreamUseCase>(
-      () => ListenNotificationActionStreamUseCase(sl()),
-    )
-    // ===========
-    // VIEW MODELS
-    // ===========
-    ..registerFactory<HomeViewModel>(
-      () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
-    );
+Future<void> injection(Flavor flavor) async {
+  if (flavor == Flavor.dev) {
+    // ==========
+    // APP CONFIG
+    // ==========
+    sl
+      ..registerSingleton<AppConfig>(const AppConfig(flavor: Flavor.dev))
+      ..registerSingleton<AppRouter>(AppRouter())
+      ..registerSingleton<Logger>(logger)
+      ..registerSingletonAsync<SharedPreferences>(
+        () async => SharedPreferences.getInstance(),
+      )
+      ..registerLazySingleton<FlutterLocalNotificationsPlugin>(
+        FlutterLocalNotificationsPlugin.new,
+      )
+      // ============
+      // REPOSIRORIES
+      // ============
+      ..registerLazySingleton<SharedPrefsLocalRepository>(
+        () => SharedPrefsLocalRepositoryImpl(sl()),
+      )
+      ..registerLazySingleton<LocalPushRepository>(
+        () => FlutterLocalPushNotificationRepository(sl()),
+      )
+      // ========
+      // SERVICES
+      // ========
+      ..registerLazySingleton<PermissionService>(PermissionHandlerService.new)
+      // =========
+      // USE CASES
+      // =========
+      ..registerLazySingleton<SetDurationPushUseCase>(
+        () => SetDurationPushUseCase(sl()),
+      )
+      ..registerLazySingleton<CancelNotificationsUseCase>(
+        () => CancelNotificationsUseCase(sl()),
+      )
+      ..registerLazySingleton<FindPendingNotificationsUseCase>(
+        () => FindPendingNotificationsUseCase(sl()),
+      )
+      ..registerLazySingleton<CheckPermissionUseCase>(
+        () => CheckPermissionUseCase(sl()),
+      )
+      ..registerLazySingleton<SaveDurationNotificationUseCase>(
+        () => SaveDurationNotificationUseCase(sl()),
+      )
+      ..registerLazySingleton<GetDurationNotificationUseCase>(
+        () => GetDurationNotificationUseCase(sl()),
+      )
+      ..registerLazySingleton<RemoveDurationNotificationInSharedPrefsUseCase>(
+        () => RemoveDurationNotificationInSharedPrefsUseCase(sl()),
+      )
+      ..registerLazySingleton<ListenNotificationActionStreamUseCase>(
+        () => ListenNotificationActionStreamUseCase(sl()),
+      )
+      // ===========
+      // VIEW MODELS
+      // ===========
+      ..registerFactory<HomeViewModel>(
+        () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
+      );
+  }
+
+  if (flavor == Flavor.prod) {
+    // ==========
+    // APP CONFIG
+    // ==========
+    sl
+      ..registerSingleton<AppConfig>(const AppConfig(flavor: Flavor.prod))
+      ..registerSingleton<AppRouter>(AppRouter())
+      ..registerSingleton<Logger>(logger)
+      ..registerSingletonAsync<SharedPreferences>(
+        () async => SharedPreferences.getInstance(),
+      )
+      ..registerLazySingleton<FlutterLocalNotificationsPlugin>(
+        FlutterLocalNotificationsPlugin.new,
+      )
+      // ============
+      // REPOSIRORIES
+      // ============
+      ..registerLazySingleton<SharedPrefsLocalRepository>(
+        () => SharedPrefsLocalRepositoryImpl(sl()),
+      )
+      ..registerLazySingleton<LocalPushRepository>(
+        () => FlutterLocalPushNotificationRepository(sl()),
+      )
+      // ========
+      // SERVICES
+      // ========
+      ..registerLazySingleton<PermissionService>(PermissionHandlerService.new)
+      // =========
+      // USE CASES
+      // =========
+      ..registerLazySingleton<SetDurationPushUseCase>(
+        () => SetDurationPushUseCase(sl()),
+      )
+      ..registerLazySingleton<CancelNotificationsUseCase>(
+        () => CancelNotificationsUseCase(sl()),
+      )
+      ..registerLazySingleton<FindPendingNotificationsUseCase>(
+        () => FindPendingNotificationsUseCase(sl()),
+      )
+      ..registerLazySingleton<CheckPermissionUseCase>(
+        () => CheckPermissionUseCase(sl()),
+      )
+      ..registerLazySingleton<SaveDurationNotificationUseCase>(
+        () => SaveDurationNotificationUseCase(sl()),
+      )
+      ..registerLazySingleton<GetDurationNotificationUseCase>(
+        () => GetDurationNotificationUseCase(sl()),
+      )
+      ..registerLazySingleton<RemoveDurationNotificationInSharedPrefsUseCase>(
+        () => RemoveDurationNotificationInSharedPrefsUseCase(sl()),
+      )
+      ..registerLazySingleton<ListenNotificationActionStreamUseCase>(
+        () => ListenNotificationActionStreamUseCase(sl()),
+      )
+      // ===========
+      // VIEW MODELS
+      // ===========
+      ..registerFactory<HomeViewModel>(
+        () => HomeViewModel(sl(), sl(), sl(), sl(), sl(), sl(), sl(), sl()),
+      );
+  }
 }

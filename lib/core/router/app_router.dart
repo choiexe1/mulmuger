@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:mulmuger/config/app_config.dart';
 import 'package:mulmuger/core/router/app_router.gr.dart';
 import 'package:mulmuger/core/router/routes.dart';
 import 'package:mulmuger/core/service_locator.dart';
@@ -17,7 +18,11 @@ class AppRouter extends RootStackRouter {
   DeepLink deepLinkHandler(PlatformDeepLink deepLink) {
     if (deepLink.path.startsWith(AppRoutes.home)) {
       final viewModel = sl<HomeViewModel>();
-      return DeepLink([HomeRoute(viewModel: viewModel)]);
+      final config = sl<AppConfig>();
+
+      return DeepLink([
+        HomeRoute(viewModel: viewModel, adsId: config.bannerAdsId),
+      ]);
     }
 
     return DeepLink.defaultPath;

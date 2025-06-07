@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mulmuger/presentation/screens/components/ads_banner.dart';
 import 'package:mulmuger/presentation/screens/components/animated_button.dart';
 import 'package:mulmuger/presentation/screens/components/step_slider.dart';
 import 'package:mulmuger/presentation/screens/home/home_action.dart';
@@ -6,23 +7,28 @@ import 'package:mulmuger/presentation/screens/home/home_state.dart';
 import 'package:mulmuger/presentation/screens/home/widgets/water_bottle.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({required this.onAction, required this.state, super.key});
+  const HomeScreen({
+    required this.adsId,
+    required this.onAction,
+    required this.state,
+    super.key,
+  });
 
   final HomeState state;
+  final String adsId;
   final ValueChanged<HomeAction> onAction;
 
   void _onChangeDuration(double value) {
     if (value <= 0) {
       onAction(const HomeAction.deleteNotifications());
     } else {
-      onAction(HomeAction.onChangedDuration(Duration(minutes: 1)));
+      onAction(HomeAction.onChangedDuration(Duration(minutes: value.toInt())));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('물머거'), centerTitle: true),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32),
@@ -62,6 +68,10 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 40),
+        child: AdsBanner(adsId: adsId),
       ),
     );
   }

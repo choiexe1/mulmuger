@@ -6,9 +6,14 @@ import 'package:mulmuger/presentation/screens/home/home_view_model.dart';
 
 @RoutePage()
 class HomeScreenRoot extends StatefulWidget {
-  const HomeScreenRoot({required this.viewModel, super.key});
+  const HomeScreenRoot({
+    required this.viewModel,
+    required this.adsId,
+    super.key,
+  });
 
   final HomeViewModel viewModel;
+  final String adsId;
 
   @override
   State<HomeScreenRoot> createState() => _HomeScreenRootState();
@@ -28,6 +33,7 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
       builder: (BuildContext context, Widget? child) {
         return HomeScreen(
           state: widget.viewModel.state,
+          adsId: widget.adsId,
           onAction: (HomeAction action) async {
             switch (action) {
               case OnChangedDuration():
