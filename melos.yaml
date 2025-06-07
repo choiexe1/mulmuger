@@ -9,3 +9,5 @@ scripts:
     run: flutter run -d macos -t lib/widgetbook/widgetbook.dart
   watch:
     run: melos exec -- flutter pub run build_runner watch -d
+  build:
+    run: flutter build appbundle --flavor prod
