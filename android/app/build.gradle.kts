@@ -44,7 +44,7 @@ android {
         create("dev") {
             dimension = "environment"
             applicationIdSuffix = ".dev"
-            resValue("string", "app_name", "물먹어 - dev")
+            resValue("string", "app_name", "물머거 - dev")
         }
         create("prod") {
             dimension = "environment"
