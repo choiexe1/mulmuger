@@ -51,7 +51,7 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
       _mainIsolatePortName,
     );
     const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      NotificationConfig.notificationIcon,
     );
     const initializeSetting = InitializationSettings(android: androidSettings);
 
