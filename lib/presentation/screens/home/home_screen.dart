@@ -63,6 +63,10 @@ class HomeScreen extends StatelessWidget {
                     onTap: () =>
                         onAction(const HomeAction.deleteNotifications()),
                   ),
+                  AnimatedButton(
+                    text: const Text('물병 비우기'),
+                    onTap: () => onAction(const HomeAction.clearWater()),
+                  ),
                 ],
               ),
             ],

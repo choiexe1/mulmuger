@@ -42,6 +42,8 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
                 await widget.viewModel.onAction(action);
               case CancelNotifications():
                 await widget.viewModel.onAction(action);
+              case ClearWater():
+                await widget.viewModel.onAction(action);
             }
           },
         );

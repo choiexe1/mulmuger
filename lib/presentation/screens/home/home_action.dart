@@ -8,4 +8,5 @@ sealed class HomeAction with _$HomeAction {
       OnChangedDuration;
   const factory HomeAction.checkNotifications() = CheckNotifications;
   const factory HomeAction.deleteNotifications() = CancelNotifications;
+  const factory HomeAction.clearWater() = ClearWater;
 }
