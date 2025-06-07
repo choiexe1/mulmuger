@@ -22,14 +22,13 @@ class HomeScreen extends StatelessWidget {
     if (value <= 0) {
       onAction(const HomeAction.deleteNotifications());
     } else {
-      onAction(HomeAction.onChangedDuration(Duration(minutes: 1)));
+      onAction(HomeAction.onChangedDuration(Duration(minutes: value.toInt())));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('물머거'), centerTitle: true),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32),
