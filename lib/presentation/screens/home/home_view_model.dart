@@ -9,9 +9,12 @@ import 'package:mulmuger/domain/enums/permission_type.dart';
 import 'package:mulmuger/domain/notification/notification_action.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
+import 'package:mulmuger/domain/use_cases/clear_water_use_case.dart';
 import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/listen_notification_action_stream_use_case.dart.dart';
+import 'package:mulmuger/domain/use_cases/load_current_water_use_case.dart';
 import 'package:mulmuger/domain/use_cases/remove_duration_notification_in_shared_prefs_use_case.dart';
+import 'package:mulmuger/domain/use_cases/save_currnet_water_use_case.dart';
 import 'package:mulmuger/domain/use_cases/save_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/set_duration_push_use_case.dart';
 import 'package:mulmuger/presentation/screens/home/home_action.dart';
@@ -27,6 +30,9 @@ class HomeViewModel with ChangeNotifier {
     this._getDurationNotificationUseCase,
     this._removeDurationNotificationInSharedPrefsUseCase,
     this._listenNotificationActionStreamUseCase,
+    this._saveCurrentWaterUseCase,
+    this._loadCurrentWaterUseCase,
+    this._clearWaterUseCase,
   ) {
     _notificationSubscription = _listenNotificationActionStreamUseCase
         .execute()
@@ -53,6 +59,9 @@ class HomeViewModel with ChangeNotifier {
   _removeDurationNotificationInSharedPrefsUseCase;
   final ListenNotificationActionStreamUseCase
   _listenNotificationActionStreamUseCase;
+  final SaveCurrentWaterUseCase _saveCurrentWaterUseCase;
+  final LoadCurrentWaterUseCase _loadCurrentWaterUseCase;
+  final ClearWaterUseCase _clearWaterUseCase;
 
   StreamSubscription<NotificationAction>? _notificationSubscription;
 
@@ -66,6 +75,8 @@ class HomeViewModel with ChangeNotifier {
         await _findPendingNotifications();
       case CancelNotifications():
         await _cancelNotifications();
+      case ClearWater():
+        await _clearWater();
     }
   }
 
@@ -73,6 +84,9 @@ class HomeViewModel with ChangeNotifier {
     await _checkPermissionUseCase.execute(PermissionType.notification);
 
     final notificationEntity = await _getDurationNotificationUseCase.execute();
+
+    final water = await _loadCurrentWaterUseCase.execute();
+    _state = _state.copyWith(water: water);
 
     if (notificationEntity != null) {
       _state = _state.copyWith(duration: notificationEntity.duration);
@@ -116,9 +130,18 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> _addWater(double value) async {
-    final currentWater = _state.water;
+    final currentWater = await _loadCurrentWaterUseCase.execute();
 
     _state = _state.copyWith(water: currentWater + value);
+    await _saveCurrentWaterUseCase.execute(_state.water);
+
+    notifyListeners();
+  }
+
+  Future<void> _clearWater() async {
+    await _clearWaterUseCase.execute();
+
+    _state = _state.copyWith(water: 0);
 
     notifyListeners();
   }

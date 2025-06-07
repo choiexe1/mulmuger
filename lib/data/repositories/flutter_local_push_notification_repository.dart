@@ -12,6 +12,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 const String _notificationCancel = 'notification_cancel';
+const String _notificationAddWater = 'notification_add_water';
 const String _mainIsolatePortName = 'main_isolate_port';
 
 @pragma('vm:entry-point')
@@ -24,6 +25,13 @@ void backgroundNotificationHandler(NotificationResponse res) {
 
   if (res.actionId == _notificationCancel) {
     mainSendPort.send(_notificationCancel);
+  }
+
+  switch (res.actionId) {
+    case _notificationCancel:
+      mainSendPort.send(_notificationCancel);
+    default:
+      mainSendPort.send(_notificationAddWater);
   }
 }
 
@@ -73,6 +81,14 @@ class FlutterLocalPushNotificationRepository implements LocalPushRepository {
     _receivePort.listen((message) {
       if (message == _notificationCancel) {
         _actionStreamController.add(NotificationAction.cancel());
+      }
+      switch (message) {
+        case _notificationCancel:
+          _actionStreamController.add(NotificationAction.cancel());
+        case _notificationAddWater:
+          _actionStreamController.add(
+            NotificationAction.addWater(NotificationConfig.defaultAddWater),
+          );
       }
     });
   }

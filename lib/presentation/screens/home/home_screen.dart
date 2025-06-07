@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     if (value <= 0) {
       onAction(const HomeAction.deleteNotifications());
     } else {
-      onAction(HomeAction.onChangedDuration(Duration(minutes: value.toInt())));
+      onAction(HomeAction.onChangedDuration(Duration(minutes: 1)));
     }
   }
 
@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(42),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,6 +62,10 @@ class HomeScreen extends StatelessWidget {
                     text: const Text('알림 제거'),
                     onTap: () =>
                         onAction(const HomeAction.deleteNotifications()),
+                  ),
+                  AnimatedButton(
+                    text: const Text('물병 비우기'),
+                    onTap: () => onAction(const HomeAction.clearWater()),
                   ),
                 ],
               ),
