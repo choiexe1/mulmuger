@@ -15,6 +15,7 @@ import 'package:mulmuger/domain/repositories/shared_prefs_local_repository.dart'
 import 'package:mulmuger/domain/services/permission_service.dart';
 import 'package:mulmuger/domain/use_cases/cancel_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/check_permission_use_case.dart';
+import 'package:mulmuger/domain/use_cases/clear_water_use_case.dart';
 import 'package:mulmuger/domain/use_cases/find_pending_notifications_use_case.dart';
 import 'package:mulmuger/domain/use_cases/get_duration_notification_use_case.dart';
 import 'package:mulmuger/domain/use_cases/listen_notification_action_stream_use_case.dart.dart';
@@ -89,11 +90,13 @@ Future<void> injection(Flavor flavor) async {
       ..registerLazySingleton<LoadCurrentWaterUseCase>(
         () => LoadCurrentWaterUseCase(sl()),
       )
+      ..registerLazySingleton<ClearWaterUseCase>(() => ClearWaterUseCase(sl()))
       // ===========
       // VIEW MODELS
       // ===========
       ..registerFactory<HomeViewModel>(
         () => HomeViewModel(
+          sl(),
           sl(),
           sl(),
           sl(),
@@ -168,11 +171,13 @@ Future<void> injection(Flavor flavor) async {
       ..registerLazySingleton<LoadCurrentWaterUseCase>(
         () => LoadCurrentWaterUseCase(sl()),
       )
+      ..registerLazySingleton<ClearWaterUseCase>(() => ClearWaterUseCase(sl()))
       // ===========
       // VIEW MODELS
       // ===========
       ..registerFactory<HomeViewModel>(
         () => HomeViewModel(
+          sl(),
           sl(),
           sl(),
           sl(),
