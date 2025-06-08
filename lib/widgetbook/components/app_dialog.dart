@@ -42,8 +42,8 @@ Widget build(BuildContext context) {
           });
 
           return AppDialog(
+            iconBackgroundColor: Colors.blueAccent,
             title: Text(title, style: const TextStyle(color: Colors.black)),
-            onTapClose: () => Navigator.pop(context),
             showCloseButton: showCloseButton,
             message: Text(
               message,
