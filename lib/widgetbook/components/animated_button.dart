@@ -7,7 +7,6 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 Widget build(BuildContext context) {
   return AnimatedButton(
     text: Text(
-      style: const TextStyle(color: Colors.white),
       context.knobs.string(label: 'text', initialValue: 'AnimatedButton'),
     ),
     onTap: () {},

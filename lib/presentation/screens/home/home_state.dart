@@ -8,5 +8,6 @@ abstract class HomeState with _$HomeState {
     @Default(false) bool isLoading,
     @Default(Duration.zero) Duration duration,
     @Default(0) double water,
+    @Default('현재 설정된 알람이 없어요!') String message,
   }) = _HomeState;
 }

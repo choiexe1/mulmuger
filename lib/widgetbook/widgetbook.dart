@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mulmuger/widgetbook/widgetbook.directories.g.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
-import 'widgetbook.directories.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -17,6 +16,10 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: directories,
       addons: [
+        BuilderAddon(
+          name: 'Scaffold',
+          builder: (context, child) => Scaffold(body: child),
+        ),
         InspectorAddon(),
         ViewportAddon([
           Viewports.none,

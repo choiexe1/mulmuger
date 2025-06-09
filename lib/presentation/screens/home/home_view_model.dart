@@ -84,20 +84,21 @@ class HomeViewModel with ChangeNotifier {
     await _checkPermissionUseCase.execute(PermissionType.notification);
 
     final notificationEntity = await _getDurationNotificationUseCase.execute();
-
     final water = await _loadCurrentWaterUseCase.execute();
+
     _state = _state.copyWith(water: water);
 
     if (notificationEntity != null) {
-      _state = _state.copyWith(duration: notificationEntity.duration);
+      _state = _state.copyWith(
+        duration: notificationEntity.duration,
+        message: '${notificationEntity.duration.inMinutes}분마다 알람이 울릴거에요!',
+      );
     }
 
     notifyListeners();
   }
 
   Future<void> _setDurationPush(Duration duration) async {
-    _state = state.copyWith(duration: duration);
-
     await _setDurationPushUseCase.execute(
       id: NotificationType.duration.id,
       title: NotificationConfig.title,
@@ -114,6 +115,11 @@ class HomeViewModel with ChangeNotifier {
 
     await _saveDurationNotificationUseCase.execute(entity);
 
+    _state = state.copyWith(
+      duration: duration,
+      message: '${entity.duration.inMinutes}분마다 알람이 울릴거에요!',
+    );
+
     notifyListeners();
   }
 
@@ -125,7 +131,10 @@ class HomeViewModel with ChangeNotifier {
   Future<void> _cancelNotifications() async {
     await _cancelNotificationsUseCase.execute();
     await _removeDurationNotificationInSharedPrefsUseCase.execute();
-    _state = _state.copyWith(duration: Duration.zero);
+    _state = _state.copyWith(
+      duration: Duration.zero,
+      message: '현재 설정된 알람이 없어요!',
+    );
     notifyListeners();
   }
 
